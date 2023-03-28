@@ -32,6 +32,6 @@ class Sclass{
         ObjectOutputStream out= new ObjectOutputStream(str);
         out.writeObject(obj);
         out.flush();
-        System.out.println();
+        System.out.println("success");
     }
 }
