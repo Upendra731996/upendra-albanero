@@ -10,7 +10,10 @@ import java.util.Optional;
 @Repository
 public interface BookRepositroy extends MongoRepository<BookModel,String> {
     Optional<BookModel> findByBookId(int bookId);
+
+
     //BookModel findByBookId(int bookId);
 
 }
+
 

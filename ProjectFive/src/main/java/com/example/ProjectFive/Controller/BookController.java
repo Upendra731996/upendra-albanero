@@ -21,14 +21,28 @@ public class BookController {
     }
 
     @GetMapping("/getBook")
-    public List<BookModel> getAllBook(){
+    public ResponseEntity <List<BookModel>>getAllBook(){
+        List list= bookService.getBook();
+if(list.size()>0){
+    return new ResponseEntity<>(list,HttpStatus.ACCEPTED);
+}
 
-     List <BookModel> list=   bookService.getBook();
+         return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
 
-        return  list;
-//        return bookService.getBook();
 
     }
+
+//=======================
+//    @GetMapping("/get")
+//    public List stringChechGet(@PathVariable String str){
+//
+//
+//    }
+///==========================
+
+
+
+
     @PutMapping("/updateBook/{id}")
     public BookModel update(@PathVariable String id,@RequestBody BookModel bookModel){
         return  bookService.bookUpdate(id,bookModel);

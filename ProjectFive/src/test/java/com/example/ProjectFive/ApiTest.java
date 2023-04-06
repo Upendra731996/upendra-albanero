@@ -1,92 +1,77 @@
 package com.example.ProjectFive;
 
 import com.example.ProjectFive.Model.BookModel;
+import com.example.ProjectFive.Repository.BookRepositroy;
 import com.example.ProjectFive.Service.BookService;
 import org.junit.jupiter.api.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
-import org.junit.jupiter.api.Assertions;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.springframework.data.mongodb.core.aggregation.ConditionalOperators.Cond.when;
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class ApiTest {
     @Autowired
     private BookService bookService;
 
+// BookModel whenMetho(){
+//    return when(bookRepositroy.save(bookModel)).thenReturn(bookModel);
+//}
+
+
+
+    @Mock
+    private BookRepositroy bookRepositroy;
+//     String bookName, String bookBody,String bookAuthor,
+//                      String bookTile,String id, int bookId
+    private BookModel bookModel=new BookModel("math","mathematic","upendra","M","642d44eeb0e639446bbba8df",101);
+private BookModel bookModel1= new BookModel("physics","calculation","rohan","PH","642d44eeb0e639446bbba8df",103);
+//
     @Test
-    public void unitTestforPost() {
-// User user = new User("123","sanvu08","Sanvu Sarvesh",22,
-        // 		"sarvesh@gmail.com","albanero","India");
-        BookModel bookModel = new BookModel();
+    public void getapi(){
 
-        bookModel.setBookId(22);
-        bookModel.setBookBody("this is math book");
-        bookModel.setBookAuthor("upendra");
-        bookModel.setBookTile("M3");
-        bookModel.setId("789456123");
-        bookModel.setBookName("math");
+    assertTrue(bookService.getBook().size()>0);
+
+//
+    }
 
 
-        Assertions.assertEquals(22,bookModel.getBookId());
-        Assertions.assertEquals("this is math book",bookModel.getBookBody());
-        Assertions.assertEquals("upendra",bookModel.getBookAuthor());
-        Assertions.assertEquals("M3",bookModel.getBookTile());
-        Assertions.assertEquals("789456123",bookModel.getId());
-        Assertions.assertEquals("math",bookModel.getBookName());
+    @Test
+    public void postapi(){
+        when(bookRepositroy.save(bookModel)).thenReturn(bookModel);
+        assertEquals(bookService.create(bookModel),bookModel);
+//Ivalid test cases
 
 
     }
-    //=========================================
+
+
     @Test
-    public void testUpdateUser(){
-
-        BookModel bookModel = new BookModel();
-
-        bookModel.setBookId(22);
-        bookModel.setBookBody("this is math book");
-        bookModel.setBookAuthor("upendra");
-
-
-        Assertions.assertEquals(22,bookModel.getBookId());
-        Assertions.assertEquals("this is math book",bookModel.getBookBody());
-        Assertions.assertEquals("upendra",bookModel.getBookAuthor());
-
-    }
-    //===========================================
-    @Test
-    public void testDEleteAPI(){
-        try {
-
-
-            BookModel bookModel = new BookModel();
-
-            bookModel.setBookId(22);
-            bookModel.setBookBody("this is math book");
-            bookModel.setBookAuthor("upendra");
-            bookModel.setBookTile("M3");
-            bookModel.setId("789456123");
-            bookModel.setBookName("math");
-
-
-            bookService.create(bookModel);
-            ;
-            bookService.deleteBook(bookModel.getId());
-            Assertions.assertEquals(null, bookService.deleteBook("789456123"));
-        }catch (Exception exception){
-            System.out.println(exception.getMessage());}
+    public void update(){
+        when(bookRepositroy.save(bookModel)).thenReturn(bookModel);
+        assertNotEquals(bookService.bookUpdate("642d44eeb0e639446bbba8df",bookModel),bookModel1);
     }
 
-    //============================================
+
+
+    @Test
+    public void deleteApi(){
+
+        assertEquals(bookService.deleteBook("642d44eeb0e639446bbba8df"),null);
+    }
 
 
 }
-
-
-
-
-
-
-

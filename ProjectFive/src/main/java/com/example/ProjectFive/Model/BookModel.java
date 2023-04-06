@@ -25,4 +25,13 @@ public class BookModel {
 
     public BookModel() {
     }
+
+    public BookModel(int bookId, String bookName) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+    }
+
+    public long getFullName() {
+        return 0;
+    }
 }
