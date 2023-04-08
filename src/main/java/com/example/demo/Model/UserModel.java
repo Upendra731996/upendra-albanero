@@ -6,6 +6,8 @@ import lombok.Data;
 public class UserModel {
     private String id;
     private String fullname;
+    private String email;
+    private String password;
 
     public UserModel(String id, String fullname, String email, String password) {
         this.id = id;
@@ -14,7 +16,7 @@ public class UserModel {
         this.password = password;
     }
 
-    private String email;
-    private String password;
+    public UserModel() {
 
+    }
 }
